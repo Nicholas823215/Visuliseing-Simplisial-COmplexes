@@ -1,5 +1,6 @@
 import random
 import math
+import time
 
 class Set:
     def __init__(self, list1 = []):
@@ -134,6 +135,7 @@ class Set:
 
 class SC(Set):
     def __init__(self, iterable):
+        self.No_crit_Meth1 = {}
         super().__init__(iterable)
         self.add(Set())
         for i in self:
@@ -167,14 +169,20 @@ class SC(Set):
                     list1.append(i)
         return list1
 
-    def Define_graphical_cords(self, r = (100,101)):
+    def Define_graphical_cords(self,random1 = True, r = (100,101), debbug = False):
         self.cords = {}
-        self.cords[self.dim_simpl[0][0]] = [random.randint(200,500),random.randint(400,600)]
+        if random1:
+            self.cords[self.dim_simpl[0][0]] = [random.randint(200,500),random.randint(400,600)]
+        else:
+            self.cords[self.dim_simpl[0][0]] = [400,400]
         h1 = self.cords[self.dim_simpl[0][0]]
         try:
-            angle = random.randint(361,581)/100
+            if random1:
+                angle = random.randint(361,581)/100
+            else:
+                angle = 3.92
             '''for some reason when the angles where smalller or larger then this range it gave a bad display'''
-            print(angle)
+            if debbug: print(angle)
             vectpr_angle = [math.cos(angle),math.sin(angle)]
             self.cords[self.dim_simpl[0][1]] = [100*vectpr_angle[0]+h1[0],100*vectpr_angle[1]+h1[1]]
             h2 = self.cords[self.dim_simpl[0][1]]
@@ -182,10 +190,9 @@ class SC(Set):
             return None
         n = len(self.dim_simpl[0])
         for i in self.dim_simpl[0]:
-            #pass
-            print(i)
+            if debbug: print(i)
         for i in range(2,len(self.dim_simpl[0])):
-            #print(self.dim_simpl[0][i-2])
+            if debbug: print(self.dim_simpl[0][i-2])
             mif_point = [(h1[0] + h2[0])/2 , (h1[1] + h2[1])/2]
             vector1 = [pow(-1,i)*r[0]/pow(pow((h1[1]-h2[1])/(h1[0]-h2[0]),2)+1,1/2)*(-(h1[1]-h2[1])/(h1[0]-h2[0])) , pow(-1,i)*r[0]/pow(pow((h1[1]-h2[1])/(h1[0]-h2[0]),2)+1,1/2)]
             for n in range(2):
@@ -193,10 +200,17 @@ class SC(Set):
             self.cords[self.dim_simpl[0][i]] = mif_point
             h1 = h2
             h2 = self.cords[self.dim_simpl[0][i]]
-            #print(self.dim_simpl[0][i],h1,h2)
+            if debbug: print(self.dim_simpl[0][i],h1,h2)
 
     def Simplisial_Collaps(self,debugging = False) -> list[Set]: #-> SC with one simplitial chollaps performed
+        
         final = []
+        if len(self) == 2:
+            for i in self:
+                final.append(i)
+            if debugging:
+                print("Same as before, only one point")
+            return final
         for i in self.dim_simpl[self.highest_dim]:
             if debugging:
                 print("set1:            ",i)
@@ -223,14 +237,75 @@ class SC(Set):
                     break
             if remove != []:
                 break
-        print(final)
+        if debugging:
+            print(final)
         for i in self.element():
             if not(i in remove):
                 final.append(i)
-        for i in final:
-            print(str(i)+", ",end="")
-        print()
+        if debugging:
+            for i in final:
+                print(str(i)+", ",end="")
+            print()
+        if self == Set(final):
+            if debugging:
+                print("Same as before")
+        else:
+            if debugging:
+                print("Reduced")
         return final
+
+    def RemoverHighcomplex(self, debugging = False):
+        for i in self.dim_simpl[self.highest_dim]:
+            if debugging:
+                print("set1:            ",i)
+            return (self/Set([i])).element() 
+        
+    def findNoOfCrit_Meth1(self, debbug = False):
+        SimC = [self,SC([Set([])])]
+        while len(SimC[0]) != 1:
+            while len(SimC[0]) != len(SimC[1]):
+                if debbug:
+                    print("Before Reduction:")
+                    print("SimC[0] = {",end="")
+                    for i in SimC[0]:
+                        print(i,", ",end="")
+                    print("}")
+                    print("SimC[1] = {",end="")
+                    for i in SimC[1]:
+                        print(i,", ",end="")
+                    print("}")
+                    print()
+                SimC[1] = SimC[0]
+                SimC[0] = SC(SimC[0].Simplisial_Collaps())
+                if debbug:
+                    print("After Reduction:")
+                    print("SimC[0] = {",end="")
+                    for i in SimC[0]:
+                        print(i,", ",end="")
+                    print("}")
+                    print("SimC[1] = {",end="")
+                    for i in SimC[1]:
+                        print(i,", ",end="")
+                    print("}")
+                    print()
+            try:
+                self.No_crit_Meth1[SimC[0].highest_dim] += 1
+            except:
+                self.No_crit_Meth1[SimC[0].highest_dim] = 1
+            SimC[0] = SC(SimC[0].RemoverHighcomplex())
+            if debbug:
+                print("REMOVED COMPLEX")
+                print("SimC[0] = {",end="")
+                for i in SimC[0]:
+                    print(i,", ",end="")
+                print("}")
+                print("SimC[1] = {",end="")
+                for i in SimC[1]:
+                    print(i,", ",end="")
+                print("}")
+                print()
+            
+
 
 
             
