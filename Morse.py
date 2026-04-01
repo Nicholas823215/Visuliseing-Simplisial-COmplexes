@@ -1,6 +1,5 @@
 import pygame
 import sys
-import random
 from Simplitial_Complises import *
 
 def MEthod1_step(self: SC, prev_dic = {}) -> list[list[Set],dict] :
