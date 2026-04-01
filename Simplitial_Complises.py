@@ -195,23 +195,28 @@ class SC(Set):
             h2 = self.cords[self.dim_simpl[0][i]]
             #print(self.dim_simpl[0][i],h1,h2)
 
-    def Simplisial_Collaps(self) -> list[Set]: #-> SC with one simplitial chollaps performed
+    def Simplisial_Collaps(self,debugging = False) -> list[Set]: #-> SC with one simplitial chollaps performed
         final = []
         for i in self.dim_simpl[self.highest_dim]:
-            print(i)
+            if debugging:
+                print("set1:            ",i)
             remove = []
             nmin1simp = self.border(i)
             for n in nmin1simp:
                 is_valid = True
-                print(n)
+                if debugging:
+                    print("element of set1: ",n)
                 for h in self.dim_simpl[self.highest_dim]:
-                    print(h)
+                    if debugging:
+                        print("against:         ",h)
                     if n in self.border(h) and n != [] and h != i:
                         is_valid = False
+                        if debugging:
+                            print("                  Fail!!!")
                     if not(is_valid):
                         break
                 if not(is_valid):
-                    break
+                    pass
                 else:
                     remove = [n,i]
                 if remove != []:
