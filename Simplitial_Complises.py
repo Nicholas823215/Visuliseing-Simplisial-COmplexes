@@ -331,5 +331,3 @@ if __name__ == "__main__":
 
 
     print(h.border(Set([1,4]))[0])
-
-
