@@ -51,4 +51,5 @@ time1 = time.perf_counter()
 SimC.findNoOfCrit_Meth1()
 time2 = time.perf_counter()
 
-print("The Simplitial complex with simplisies of",SimC,f"\nTook {time2-time1} seconds to calculate\nAnd found a Morse Function with {SimC.No_crit_Meth1} critical simplisies" )
+if __name__ == "__main__":
+    print("The Simplitial complex with simplisies of",SimC,f"\nTook {time2-time1} seconds to calculate\nAnd found a Morse Function with {SimC.No_crit_Meth1} critical simplisies" )
