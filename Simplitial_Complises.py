@@ -316,7 +316,13 @@ class SC(Set):
 
 
     def __str__(self):
-        return super().__str__() 
+        elemts = []
+        for i in self.elements:
+            t = []
+            for n in i.elements:
+                t.append(n)
+            elemts.append(t)
+        return str(elemts)
     def __iter__(self):
         return super().__iter__()   
     def __len__(self):
