@@ -10,6 +10,7 @@ try:
         debug = False
 except:
     debug = False
+
 file1 = open("triangluatin.txt","r")
 
 lines = []
@@ -23,17 +24,22 @@ line1[-1] = line1[-1][:-1]
 for i in line1:
     lines.append([i])
 
-file1.readline()
 line1 = file1.readline()
+while line1 == "\n":
+    line1 = file1.readline()
 
 
 while line1 != "":
+    if line1 == "\n":
+        line1 = file1.readline()
+        continue
     if debug:
         print(line1)
     while line1[0] == "#":
         line1 = file1.readline()
-    line1 = line1.strip(" ")
-    line1 = line1[1:-2]
+    line1 = line1.strip()
+    if line1[-1] == "]":
+        line1 = line1[1:-1]
     line1 = line1.split(",")
     lines.append(line1)
     line1 = file1.readline()
