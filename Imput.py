@@ -59,3 +59,4 @@ time2 = time.perf_counter()
 
 if __name__ == "__main__":
     print("The Simplitial complex with simplisies of",SimC,f"\nTook {time2-time1} seconds to calculate\nAnd found a Morse Function with {SimC.No_crit_Meth1} critical simplisies" )
+    time.sleep(10000)
