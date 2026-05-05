@@ -4,3 +4,5 @@
 #These are your multidimentional Trinagulations:
 [1,2]
 [1,2,3]
+
+#After editing this file run the Imput.py file and see the results, it will automaticly close after 10000 seconds.
