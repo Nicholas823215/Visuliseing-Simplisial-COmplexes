@@ -1,8 +1,8 @@
 # This is where you define your 0 dim simplisies with commers sepperating them
 1,2,3,4,5,6,7,8,9
 
-#These are your multidimentional Trinagulations:
-[1,2]
-[1,2,3]
+#These are your multidimentional Trinagulations, each line is one trianulation:
+1,2
+1,2,3
 
 #After editing this file run the Imput.py file and see the results, it will automaticly close after 10000 seconds.
